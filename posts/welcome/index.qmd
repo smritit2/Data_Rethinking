@@ -1,0 +1,10 @@
+---
+title: "Welcome To My Blog"
+author: "Smriti"
+date: "2024-12-04"
+categories: [energy, thoughts, clean, sustainability]
+---
+
+This is the first post in a Quarto blog. Welcome!
+
+![](thumbnail.jpg) Welcome to my blog! Here, I explore how electric vehicles and renewable energy are shaping a sustainable future. Discover how these technologies are transforming transportation, energy, and the fight against climate change. Let’s rethink what’s possible (with data).

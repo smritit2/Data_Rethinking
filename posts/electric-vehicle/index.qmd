@@ -1,0 +1,135 @@
+---
+title: "Electric Vehicle"
+author: "Smriti"
+date: "2024-12-03"
+categories: [electric, vehicle, code, analysis]
+dataset: "State of Washington. (2024). Electric Vehicle Population Data 
+[Dataset]. Department of Licensing. Retrieved from 
+https://data.wa.gov/d/f6w7-q2d2"
+image: "image.jpg"
+---
+
+This is a post with executable code.
+
+```         
+The transition to electric vehicles (EVs) is key to addressing climate change 
+and reducing fossil fuel reliance. This dataset from the Washington State 
+Department of Licensing highlights registration trends for battery electric 
+(BEVs) and plug-in hybrid vehicles (PHEVs). It aids in understanding adoption
+patterns, infrastructure needs, and clean energy effectiveness, policymakers,
+businesses, and consumers toward sustainable mobility.
+
+data url: https://catalog.data.gov/dataset/electric-vehicle-population-data
+photo: https://unsplash.com/photos/black-and-silver-car-steering-wheel-YhXlYJYlr3c
+```
+
+```{r}
+library(ggplot2)
+library(readr)
+```
+
+```{r}
+library(dplyr)
+file_path <- "data/Cleaned_Electric_Vehicle_Population_Data.csv"
+ev_data <- read_csv(file_path)
+```
+
+```         
+The dataset contains over 200,000 records of electric vehicle registrations 
+in Washington State.
+```
+
+```{r}
+head(ev_data)
+```
+
+```{r}
+summary(ev_data)
+```
+
+```{r}
+ev_type_distribution <- ev_data %>%
+  group_by(Electric_Vehicle_Type) %>%
+  summarize(Count = n())
+
+ggplot(ev_type_distribution, aes(x = reorder(Electric_Vehicle_Type, -Count), y = Count)) +
+  geom_bar(stat = "identity", fill = "darkgreen") +
+  theme_minimal() +
+  labs(title = "Distribution of Electric Vehicle Types",
+       x = "Vehicle Type", y = "Count")
+```
+
+```         
+The majority of registrations are for Battery Electric Vehicles (BEVs), 
+indicating a strong preference for fully electric solutions over hybrids.
+```
+
+```{r}
+if ("Year" %in% colnames(ev_data)) {
+  ev_trends <- ev_data %>%
+    group_by(Year) %>%
+    summarize(Count = n())
+
+  ggplot(ev_trends, aes(x = Year, y = Count)) +
+    geom_line(color = "darkgreen") +
+    theme_minimal() +
+    labs(title = "Trends in Electric Vehicle Registrations",
+         x = "Year", y = "Count")
+}
+```
+
+```         
+A steady increase in EV registrations is observed, particularly post-2020, 
+coinciding with growing environmental awareness and advancements in EV 
+technology.
+```
+```{r}
+ev_model_analysis <- ev_data %>%
+  group_by(Make) %>%
+  summarize(Count = n()) %>%
+  arrange(desc(Count)) %>%
+  head(10)
+ggplot(ev_model_analysis, aes(x = Make, y = Count)) +
+  geom_bar(stat = "identity", fill = "darkgreen") +
+  theme_minimal() +
+  labs(title = "Top 10 Electric Vehicle Models",
+       x = "Make", y = "Count")
+```
+Tesla dominates the market. Other vehicles come from Nissan (Leaf) and Chevrolet 
+(Bolt).
+
+
+```{r}
+ev_model_analysis <- ev_data %>%
+  group_by(Model) %>%
+  summarize(Count = n()) %>%
+  arrange(desc(Count)) %>%
+  head(10)
+ggplot(ev_model_analysis, aes(x = reorder(Model, -Count), y = Count)) +
+  geom_bar(stat = "identity", fill = "darkgreen") +
+  theme_minimal() +
+  labs(title = "Top 10 Electric Vehicle Models",
+       x = "Model", y = "Count")
+```
+
+```         
+Tesla's Model 3 and Model Y lead registrations.
+```
+
+```         
+The visualizations confirm the dominance of BEVs in Washington State's electric 
+vehicle population. The bar chart showcasing the distribution of EV types 
+highlights the public's  clear inclination towards BEVs. This preference is 
+driven by their lower emissions and decreasing costs. Temporal analysis 
+demonstrates exponential growth in EV registrations.  This growth is especially noticeable in recent years. It suggests the presence of effective policy 
+incentives and increased consumer confidence. The analysis of the top 10 EV 
+models underscores the strong influence of Tesla on the market. This influence 
+reflects Tesla's brand strength and innovation.
+```
+
+```         
+Sources
+
+State of Washington. (2024). Electric Vehicle Population Data [Dataset]. Department of 
+Licensing. Retrieved from https://data.wa.gov/d/f6w7-q2d2
+```

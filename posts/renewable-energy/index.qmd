@@ -1,0 +1,78 @@
+---
+title: "Renewable energy"
+author: "Smriti"
+date: "2024-12-04"
+categories: [news, code, analysis]
+image: "image.jpg"
+---
+
+This is a post with executable code.
+
+Renewable energy is a critical focus in addressing climate change. The transition to sustainable energy sources like solar, wind, and hydropower ensures both environmental and economic benefits. Analyzing global data helps us understand trends, adoption rates, and areas of improvement.
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+```
+
+```{r}
+data <- read.csv("data/Renewable_Energy.csv")
+```
+
+The first few countries are Advanced Economics, which does not make sense. Africa is also listed as a country.
+
+The dataset was cleaned and transformed for analysis. It contains time-series data, categorized by countries, technologies, and energy types (e.g., renewable and non-renewable).
+
+```{r}
+data_long <- data %>%
+  pivot_longer(cols = starts_with("F"), names_to = "Year", values_to = "Value") %>%
+  mutate(Year = as.numeric(gsub("F", "", Year)))
+```
+
+Reshaping data for visualization, converting yearly columns into a long format.
+
+```{r}
+renewables <- data_long %>%
+  filter(Energy_Type == "Total Renewable" & Indicator == "Electricity Generation")
+
+```
+
+Filtering data to focus on renewable electricity generation.
+
+```{r}
+renewables %>%
+  filter(Country %in% c("United States", "India", "Germany")) %>%
+  ggplot(aes(x = Year, y = Value, color = Country)) +
+  geom_line(size = 1) +
+  labs(title = "Renewable Electricity Generation Over Time",
+       x = "Year",
+       y = "Generation (GWh)") +
+  theme_minimal()
+
+
+```
+
+The United States demonstrates steady growth in renewable energy. This growth is particularly driven by significant wind and hydropower contributions. Recent boosts in solar and infrastructure investments further enhance this trend. India shows rapid acceleration in renewable capacity. This is primarily due to solar and wind energy, aided by ambitious government targets for 2030. Germany has a mature renewable energy sector and maintains consistent output from wind and solar. Hydropower also plays a key role in stabilizing its energy mix. The graph highlights these trends clearly. The U.S. dominates in generation, while India is on a sharp upward trajectory. Germany continues to maintain steady growth. Accurate data handling is critical to monitoring this global transition.
+
+```{r}
+renewables %>%
+  group_by(Technology) %>%
+  summarise(Total = sum(Value, na.rm = TRUE)) %>%
+  ggplot(aes(x = Technology, y = Total)) +
+  geom_bar(stat = "identity", fill = "darkgreen") +
+  labs(title = "Total Renewable Energy Generation by Technology",
+       x = "Technology",
+       y = "Total Generation (GWh)") +
+  theme_minimal()
+```
+
+Hydropower remains the largest contributor to renewable energy. This is due to its large-scale capacity and widespread use. Wind energy follows, providing substantial output. Solar energy is rapidly growing but still lags behind wind and hydropower. Bioenergy contributes minimally. However, it remains a key component of the renewable energy mix.
+
+Renewables are on the rise, but the pace varies significantly between nations and technologies. Wind and Hydropower energy are leading the renewable revolution.
+
+Source
+
+Dataset: https://www.kaggle.com/datasets/pinuto/global-energy-generation-and-capacity-imf
+
+Image: https://unsplash.com/photos/water-dam-under-white-and-blue-skies-FUeb2npsblQ

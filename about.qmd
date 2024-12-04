@@ -1,0 +1,17 @@
+---
+title: "About"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/smriti-trivedi/
+    - icon: github
+      text: Github
+      href: https://github.com/smritit2
+---
+
+About this blog
+
+Hi, I'm Smriti Trivedi, a student at the University of Illinois Urbana-Champaign, studying Information Science + Data Science with a CS minor. Beyond academics, I enjoy flying, horse riding, and coding. This blog is where I share my thoughts and ideas—blending my love for technology and creativity. Thanks for stopping by!
